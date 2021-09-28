@@ -54,5 +54,28 @@ module.exports = (app) => {
         else { res.status(400).json({ mensaje: "Error al Crear Pais" }); }
 
     });
+    app.delete("/v1/paises/", async (req, res) => {
+
+        console.log("peticion DELETE a : /v1/paises/ ");
+
+        console.log("Validando Si existe el pais");
+
+        console.log(req.body)
+
+        const consultaPais = await paisesServicios.buscarPais(req.body);
+
+        if (consultaPais.length > 0) {
+
+            const eliminarPais = await paisesServicios.eliminarPais(req.body);
+
+            res.status(201).json({
+                mensaje: `Usuario ${req.body.name} eliminado correctamente ! `
+            });
+
+        }
+
+        else { res.status(400).json({ mensaje: "Error al Eliminar Pais" }); }
+
+    });
 
 }

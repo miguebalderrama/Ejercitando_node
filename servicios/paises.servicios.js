@@ -38,3 +38,40 @@ module.exports.crearPais = async (objPais) => {
         
         return "OK";
 }
+module.exports.buscarPais = async (objPais) => {
+
+    if (objPais.nombre) {
+        query = "SELECT * FROM paises WHERE nombre = :nombre";
+    } else {
+        query = "SELECT * FROM paises";
+    }
+
+    const respuesta =
+        sequelize.query(query, {
+            replacements: { nombre: objPais.nombre },
+            type: sequelize.QueryTypes.SELECT
+        });
+
+    return respuesta;
+
+}
+
+module.exports.eliminarPais = async (objPais) => {
+
+    const id = objPais.id;
+
+    if (id) {
+
+        query = "DELETE FROM paises WHERE id = :id";
+
+        const respuesta =
+            sequelize.query(query, {
+                replacements: { id },
+                type: sequelize.QueryTypes.DELETE
+            });
+
+        return respuesta;
+
+    }
+
+}
